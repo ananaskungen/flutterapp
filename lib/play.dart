@@ -8,6 +8,7 @@ class PlayScreen extends StatefulWidget {
   @override
   _PlayScreenState createState() => _PlayScreenState();
 }
+
 class _PlayScreenState extends State<PlayScreen> {
   int score = 0;
   int consecutiveMisses = 0;
@@ -40,13 +41,13 @@ class _PlayScreenState extends State<PlayScreen> {
             setState(() {
               if (dotVisible) {
                 consecutiveMisses++;
+                if (consecutiveMisses >= 1 || (consecutiveMisses == 1 && score == 0)) {
+                  goToHomePage();
+                  return;
+                }
               }
               dotVisible = false;
-              if (score == 0 || consecutiveMisses >= 2) {
-                goToHomePage();
-              } else {
-                startGame();
-              }
+              startGame();
             });
           }
         });
@@ -79,6 +80,8 @@ class _PlayScreenState extends State<PlayScreen> {
         dotVisible = false;
       });
       startGame();
+    } else {
+      goToHomePage();
     }
   }
 
